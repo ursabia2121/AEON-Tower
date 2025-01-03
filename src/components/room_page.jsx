@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import room1 from "../img/570179000.jpg";
 import room2 from "../img/609867519.jpg";
 import room3 from "../img/609867568.jpg";
+import BookingForm from "./booking_form";
 
 const RoomsPage = () => {
+  const [showBookingModal, setShowBookingModal] = useState(false);
+
   return (
     <div id="rooms" className="bg-gray-100 py-16">
       <div className="container mx-auto text-center">
@@ -25,7 +28,10 @@ const RoomsPage = () => {
                   Enjoy a comfortable stay with luxury amenities and a beautiful
                   city view.
                 </p>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <button
+                  onClick={() => setShowBookingModal(true)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
                   Book Now
                 </button>
               </div>
@@ -46,7 +52,10 @@ const RoomsPage = () => {
                   Spacious and elegant, perfect for those seeking an upscale
                   experience.
                 </p>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <button
+                  onClick={() => setShowBookingModal(true)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
                   Book Now
                 </button>
               </div>
@@ -67,7 +76,10 @@ const RoomsPage = () => {
                   Experience premium comfort and top-tier amenities for a
                   memorable stay.
                 </p>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <button
+                  onClick={() => setShowBookingModal(true)}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
                   Book Now
                 </button>
               </div>
@@ -75,6 +87,24 @@ const RoomsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Booking Modal */}
+      {showBookingModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div
+            className="bg-white p-4 rounded shadow-lg w-full max-w-md overflow-y-auto"
+            style={{ maxHeight: "75vh", maxWidth: "800px" }}
+          >
+            <button
+              className="text-gray-100 hover:text-gray-800 absolute top-4 right-4"
+              onClick={() => setShowBookingModal(false)}
+            >
+              ✕
+            </button>
+            <BookingForm />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
