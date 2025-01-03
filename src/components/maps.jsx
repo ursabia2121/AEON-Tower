@@ -149,10 +149,11 @@ const mapStyles = [
 
 
 const HotelMap = () => {
+    const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   return (
     <div className="map-container">
         <h2 className="text-4xl font-bold mb-12 text-center">Our Location</h2>
-    <LoadScript googleMapsApiKey="AIzaSyB6Pou9huVZNiyUKsYiEjR7LhajLRozczo">
+    <LoadScript googleMapsApiKey={googleMapsApiKey}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
