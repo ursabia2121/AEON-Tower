@@ -6,7 +6,6 @@ import AboutUs from "./components/about_us";
 import Footer from "./components/footer";
 import Testimonials from "./components/testimonials";
 import GalleryPage from "./components/gallery_page";
-import Routing from "./routing/routes";
 import Maps from "./components/maps";
 
 const App = () => {

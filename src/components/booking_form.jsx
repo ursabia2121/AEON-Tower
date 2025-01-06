@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-import { SubmitForm } from "../api/axios"; // Assuming the SubmitForm API is already defined.
+import { SubmitForm } from "../api/axios";
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    email: "",
+    phoneNumber: "",
     roomType: "",
     numberOfGuests: 1,
     arrivalDate: "",
     arrivalTime: "",
     departureDate: "",
-    paymentRequired: false, // Track if payment is required
-    paymentMethod: "", // Track selected payment method
-    paymentInfo: "" // Store payment information (e.g., card number, PayPal, etc.)
+    paymentRequired: false,
+    paymentMethod: "",
+    paymentInfo: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -28,7 +29,7 @@ const BookingForm = () => {
     setFormData({
       ...formData,
       [name]: checked,
-      paymentMethod: checked ? "Credit Card" : "" // Default to "Credit Card" when selected
+      paymentMethod: checked ? "Credit Card" : "",
     });
   };
 
@@ -51,6 +52,8 @@ const BookingForm = () => {
         setFormData({
           firstName: "",
           lastName: "",
+          email: "",
+          phoneNumber: "",
           roomType: "",
           numberOfGuests: 1,
           arrivalDate: "",
@@ -58,7 +61,7 @@ const BookingForm = () => {
           departureDate: "",
           paymentRequired: false,
           paymentMethod: "",
-          paymentInfo: ""
+          paymentInfo: "",
         });
       } else {
         alert("Error submitting the booking. Please try again.");
@@ -71,12 +74,22 @@ const BookingForm = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form className="bg-white p-8 rounded shadow-md w-full max-w-md" onSubmit={handleSubmit}>
-        <h1 className="text-2xl font-bold mb-6 text-center">Book Now at AEON Tower</h1>
+      <form
+        className="bg-white p-8 rounded shadow-md w-full max-w-md"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Book Now at AEON Tower
+        </h1>
 
         {/* Name Fields */}
         <div className="mb-4">
-          <label htmlFor="firstName" className="block text-gray-700 font-medium mb-2">First Name</label>
+          <label
+            htmlFor="firstName"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            First Name
+          </label>
           <input
             type="text"
             id="firstName"
@@ -88,7 +101,12 @@ const BookingForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="lastName" className="block text-gray-700 font-medium mb-2">Last Name</label>
+          <label
+            htmlFor="lastName"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Last Name
+          </label>
           <input
             type="text"
             id="lastName"
@@ -100,9 +118,42 @@ const BookingForm = () => {
           />
         </div>
 
+        {/* Email Field */}
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        {/* Phone Number Field */}
+        <div className="mb-4">
+          <label htmlFor="phoneNumber" className="block text-gray-700 font-medium mb-2">Contact Number</label>
+          <input
+            type="text"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
         {/* Room Type & Guests */}
         <div className="mb-4">
-          <label htmlFor="roomType" className="block text-gray-700 font-medium mb-2">Room Type</label>
+          <label
+            htmlFor="roomType"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Room Type
+          </label>
           <select
             id="roomType"
             name="roomType"
@@ -119,7 +170,12 @@ const BookingForm = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="numberOfGuests" className="block text-gray-700 font-medium mb-2">Number of Guests</label>
+          <label
+            htmlFor="numberOfGuests"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Number of Guests
+          </label>
           <input
             type="number"
             id="numberOfGuests"
@@ -134,7 +190,12 @@ const BookingForm = () => {
 
         {/* Dates */}
         <div className="mb-4">
-          <label htmlFor="arrivalDate" className="block text-gray-700 font-medium mb-2">Arrival Date</label>
+          <label
+            htmlFor="arrivalDate"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Arrival Date
+          </label>
           <input
             type="date"
             id="arrivalDate"
@@ -146,7 +207,12 @@ const BookingForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="arrivalTime" className="block text-gray-700 font-medium mb-2">Arrival Time</label>
+          <label
+            htmlFor="arrivalTime"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Arrival Time
+          </label>
           <input
             type="time"
             id="arrivalTime"
@@ -158,7 +224,12 @@ const BookingForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="departureDate" className="block text-gray-700 font-medium mb-2">Departure Date</label>
+          <label
+            htmlFor="departureDate"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Departure Date
+          </label>
           <input
             type="date"
             id="departureDate"
@@ -187,7 +258,12 @@ const BookingForm = () => {
         {/* Payment Section */}
         {formData.paymentRequired && (
           <div className="mb-4">
-            <label htmlFor="paymentMethod" className="block text-gray-700 font-medium mb-2">Payment Method</label>
+            <label
+              htmlFor="paymentMethod"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Payment Method
+            </label>
             <select
               id="paymentMethod"
               name="paymentMethod"
@@ -208,7 +284,12 @@ const BookingForm = () => {
         {/* Payment Info - dynamically show based on selected payment method */}
         {formData.paymentMethod === "Credit Card" && (
           <div className="mb-4">
-            <label htmlFor="paymentInfo" className="block text-gray-700 font-medium mb-2">Credit Card Number</label>
+            <label
+              htmlFor="paymentInfo"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Credit Card Number
+            </label>
             <input
               type="text"
               id="paymentInfo"
@@ -224,7 +305,12 @@ const BookingForm = () => {
 
         {formData.paymentMethod === "PayPal" && (
           <div className="mb-4">
-            <label htmlFor="paymentInfo" className="block text-gray-700 font-medium mb-2">PayPal Email</label>
+            <label
+              htmlFor="paymentInfo"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              PayPal Email
+            </label>
             <input
               type="email"
               id="paymentInfo"
@@ -240,7 +326,12 @@ const BookingForm = () => {
 
         {formData.paymentMethod === "GCash" && (
           <div className="mb-4">
-            <label htmlFor="paymentInfo" className="block text-gray-700 font-medium mb-2">GCash Phone Number</label>
+            <label
+              htmlFor="paymentInfo"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              GCash Phone Number
+            </label>
             <input
               type="text"
               id="paymentInfo"
@@ -256,7 +347,12 @@ const BookingForm = () => {
 
         {formData.paymentMethod === "Maya" && (
           <div className="mb-4">
-            <label htmlFor="paymentInfo" className="block text-gray-700 font-medium mb-2">Maya Phone Number</label>
+            <label
+              htmlFor="paymentInfo"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Maya Phone Number
+            </label>
             <input
               type="text"
               id="paymentInfo"
@@ -275,7 +371,9 @@ const BookingForm = () => {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          {formData.paymentRequired ? "Pay and Submit Booking" : "Submit Booking"}
+          {formData.paymentRequired
+            ? "Pay and Submit Booking"
+            : "Submit Booking"}
         </button>
       </form>
     </div>

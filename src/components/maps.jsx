@@ -159,7 +159,7 @@ const HotelMap = () => {
         center={center}
         zoom={12}
         options={{
-          styles: mapStyles, // Apply the modern map styling
+          styles: mapStyles,
         }}
       >
         <Marker position={center} title="AEON Tower Suites" />

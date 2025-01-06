@@ -56,7 +56,7 @@ const Footer = () => {
         {/* Contact Section */}
         <div>
           <h2 className="text-xl font-bold mb-4">Contact Us</h2>
-          <p className="text-gray-400">123 AEON Tower Street, Cityville</p>
+          <p className="text-gray-400">J. P. Laurel Avenue, Davao City</p>
           <p className="text-gray-400">Email: support@aeontower.com</p>
           <p className="text-gray-400">Phone: +1 234 567 890</p>
 

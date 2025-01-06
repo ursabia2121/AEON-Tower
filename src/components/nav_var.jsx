@@ -155,7 +155,7 @@ const Navbar = () => {
               ✕
             </button>
             <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-            <p className="text-gray-700 mb-2">123 AEON Tower Street, Cityville</p>
+            <p className="text-gray-700 mb-2">J. P. Laurel Avenue, Davao City</p>
             <p className="text-gray-700 mb-2">Email: support@aeontower.com</p>
             <p className="text-gray-700 mb-4">Phone: +1 234 567 890</p>
             <a
