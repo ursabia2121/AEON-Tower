@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitForm } from "../api/axios";
 
 const BookingForm = () => {
+  const roomPaymentAmounts = {
+    "Deluxe Double Studio": 150,
+    "Deluxe Suite": 100,
+    "Superior Suite": 200,
+  };
+
+  const roomLimits = {
+    "Deluxe Double Studio": 3,
+    "Deluxe Suite": 2,
+    "Superior Suite": 4,
+  };
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,7 +27,47 @@ const BookingForm = () => {
     paymentRequired: false,
     paymentMethod: "",
     paymentInfo: "",
+    paymentAmount: 0, // Store payment amount
   });
+
+  useEffect(() => {
+    if (formData.roomType) {
+      // Set the number of guests to the max allowed for the selected room type
+      const maxGuests = roomLimits[formData.roomType];
+      if (formData.numberOfGuests > maxGuests) {
+        setFormData((prevData) => ({
+          ...prevData,
+          numberOfGuests: maxGuests,
+        }));
+      }
+      // Set the fixed payment amount for the selected room type
+      const newPaymentAmount = roomPaymentAmounts[formData.roomType];
+      setFormData((prevData) => ({
+        ...prevData,
+        paymentAmount: newPaymentAmount,
+      }));
+    }
+  }, [formData.roomType, formData.numberOfGuests]);
+
+  useEffect(() => {
+    // Calculate the payment amount based on the duration of stay
+    if (formData.arrivalDate && formData.departureDate) {
+      const arrival = new Date(formData.arrivalDate);
+      const departure = new Date(formData.departureDate);
+      const timeDiff = departure - arrival;
+      const days = timeDiff / (1000 * 3600 * 24); // Convert milliseconds to days
+
+      if (days > 0) {
+        // Update paymentAmount based on the number of days
+        const roomRate = roomPaymentAmounts[formData.roomType];
+        setFormData((prevData) => ({
+          ...prevData,
+          paymentAmount: roomRate * days,
+        }));
+      }
+    }
+  }, [formData.arrivalDate, formData.departureDate, formData.roomType]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,12 +89,14 @@ const BookingForm = () => {
     e.preventDefault();
     console.log("Form Data:", formData);
 
-    // Ensure payment details are provided if payment is required
-    if (formData.paymentRequired && !formData.paymentInfo) {
+    if (
+      formData.paymentRequired &&
+      formData.paymentMethod !== "Cash" &&
+      !formData.paymentInfo
+    ) {
       alert("Please provide payment details.");
       return;
     }
-
     // Send the booking data to backend
     try {
       const response = await SubmitForm(formData);
@@ -62,6 +116,7 @@ const BookingForm = () => {
           paymentRequired: false,
           paymentMethod: "",
           paymentInfo: "",
+          paymentAmount: 0, // Reset payment amount
         });
       } else {
         alert("Error submitting the booking. Please try again.");
@@ -174,7 +229,7 @@ const BookingForm = () => {
             htmlFor="numberOfGuests"
             className="block text-gray-700 font-medium mb-2"
           >
-            Number of Guests
+            Number of Guests (Max: {roomLimits[formData.roomType]})
           </label>
           <input
             type="number"
@@ -183,9 +238,20 @@ const BookingForm = () => {
             value={formData.numberOfGuests}
             onChange={handleChange}
             min="1"
+            max={roomLimits[formData.roomType] || 1} // Set the max number of guests based on room type
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+        </div>
+
+        {/* Payment Amount Display */}
+        <div className="mb-4">
+          <label
+            htmlFor="paymentAmount"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Total Payment Amount: ${formData.paymentAmount}
+          </label>
         </div>
 
         {/* Dates */}
@@ -273,6 +339,7 @@ const BookingForm = () => {
               required
             >
               <option value="">Select Payment Method</option>
+              <option value="Cash">Cash</option>
               <option value="Credit Card">Credit Card</option>
               <option value="PayPal">PayPal</option>
               <option value="GCash">GCash</option>
@@ -281,7 +348,7 @@ const BookingForm = () => {
           </div>
         )}
 
-        {/* Payment Info - dynamically show based on selected payment method */}
+        {/* Payment Info */}
         {formData.paymentMethod === "Credit Card" && (
           <div className="mb-4">
             <label
@@ -330,7 +397,7 @@ const BookingForm = () => {
               htmlFor="paymentInfo"
               className="block text-gray-700 font-medium mb-2"
             >
-              GCash Phone Number
+              GCash Number
             </label>
             <input
               type="text"
@@ -339,7 +406,7 @@ const BookingForm = () => {
               value={formData.paymentInfo}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your GCash phone number"
+              placeholder="Enter your GCash number"
               required
             />
           </div>
@@ -351,7 +418,7 @@ const BookingForm = () => {
               htmlFor="paymentInfo"
               className="block text-gray-700 font-medium mb-2"
             >
-              Maya Phone Number
+              Maya Number
             </label>
             <input
               type="text"
@@ -360,7 +427,7 @@ const BookingForm = () => {
               value={formData.paymentInfo}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your Maya phone number"
+              placeholder="Enter your Maya number"
               required
             />
           </div>
