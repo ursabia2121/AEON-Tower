@@ -24,7 +24,7 @@ const Testimonials = () => {
                 className="rounded-full w-12 h-12 object-cover mr-4"
               />
               <div>
-                <h4 className="font-semibold">Angel</h4>
+                <b className="font-semibold">Angel</b>
                 <p className="text-gray-500">United States of America</p>
                 <p className="text-yellow-400">8.0/10</p>
               </div>
@@ -48,7 +48,7 @@ const Testimonials = () => {
                 className="rounded-full w-12 h-12 object-cover mr-4"
               />
               <div>
-                <h4 className="font-semibold">Anthony</h4>
+                <b className="font-semibold">Anthony</b>
                 <p className="text-gray-500">United States of America</p>
                 <p className="text-yellow-400">9.0/10</p>
               </div>
@@ -70,7 +70,7 @@ const Testimonials = () => {
                 className="rounded-full w-12 h-12 object-cover mr-4"
               />
               <div>
-                <h4 className="font-semibold">Ignacito</h4>
+                <b className="font-semibold">Ignacito</b>
                 <p className="text-gray-500">Philippines</p>
                 <p className="text-yellow-400">9.0/10</p>
               </div>
@@ -91,7 +91,7 @@ const Testimonials = () => {
                 className="rounded-full w-12 h-12 object-cover mr-4"
               />
               <div>
-                <h4 className="font-semibold">Honglun</h4>
+                <b className="font-semibold">Honglun</b>
                 <p className="text-gray-500">China</p>
                 <p className="text-yellow-400">10/10</p>
               </div>
@@ -114,7 +114,7 @@ const Testimonials = () => {
                 className="rounded-full w-12 h-12 object-cover mr-4"
               />
               <div>
-                <h4 className="font-semibold">Celedonia</h4>
+                <b className="font-semibold">Celedonia</b>
                 <p className="text-gray-500">Philippines</p>
                 <p className="text-yellow-400">9.0/10</p>
               </div>

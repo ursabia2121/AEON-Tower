@@ -8,7 +8,7 @@ const Footer = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">About AEON Tower</h2>
           <p className="text-gray-400">
-            AEON Tower Suites & Hotel by CMC is a luxury hotel providing
+            <b>AEON Tower Suites & Hotel by CMC is in Davao City </b> a luxury hotel providing
             top-notch amenities and exceptional service. Experience comfort and
             elegance at its finest.
           </p>
