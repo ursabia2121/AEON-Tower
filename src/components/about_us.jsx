@@ -21,10 +21,13 @@ const AboutUs = () => {
             About AEON Tower Suites & Hotel by CMC
           </h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            Nestled in the heart of the city, <b>AEON Tower Suites & Hotel by CMC in Davao City </b>
-            offers an unparalleled blend of luxury, comfort, and convenience.
-            Our mission is to provide exceptional service and a memorable
-            experience, whether you're here for leisure or business.
+          AEON Tower Suites is more than just a luxury hotel in Davao City—it’s a gateway to the vibrant culture, rich heritage, 
+          and modern lifestyle that this bustling destination has to offer. Located in the iconic AEON Tower, we take pride in being 
+          a part of CMC, a trusted name in delivering world-class accommodations and services. Whether you're looking for a hotel in 
+          Davao City for business or leisure, AEON Tower Suites ensures a stay that exceeds expectations.From our prime location in Davao City, 
+          guests at AEON Tower Suites enjoy unparalleled convenience. The hotel is situated near the city’s bustling business districts, renowned
+          tourist attractions, and vibrant culinary hubs. Whether it’s your first time in the city or you’re a frequent visitor, AEON Tower Suites in 
+          Davao City offers more than just accommodation—it provides an unforgettable experience of comfort and elegance.
           </p>
           <p className="text-gray-600 leading-relaxed">
             From elegantly designed rooms to world-class amenities, every detail
