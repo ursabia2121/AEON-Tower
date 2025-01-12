@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import room1 from "../img/570179000.jpg";
-import room2 from "../img/609867519.jpg";
-import room3 from "../img/609867568.jpg";
+import room1 from "../img/AEON-Tower-by-CMC-LLC-1.jpg";
+import room2 from "../img/AEON-Tower-by-CMC-LLC-10.jpg";
+import room3 from "../img/AEON-Tower-by-CMC-LLC-13.jpg";
 import BookingForm from "./booking_form";
 
 const RoomsPage = () => {
@@ -12,7 +12,7 @@ const RoomsPage = () => {
   const roomDetails = [
     {
       id: 1,
-      name: "Deluxe Double Studio",
+      name: "Deluxe Double Studio Bedroom",
       description:
         "Enjoy a comfortable stay with luxury amenities and a beautiful city view.",
       price: "$120 / night",
@@ -86,7 +86,8 @@ const RoomsPage = () => {
             >
               <img
                 src={room.img}
-                alt={room.name}
+                download="Deluxe-Double-Studio-Room.jpg"
+                alt={`${room.name} Deluxe Double Studio Bedroom`}
                 className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

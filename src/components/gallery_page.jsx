@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
 // Importing images dynamically
-import img1 from "../img/570179000.jpg";
-import img2 from "../img/570179064.jpg";
-import img3 from "../img/570366246.jpg";
-import img4 from "../img/570612246.jpg";
-import img5 from "../img/570730258.jpg";
-import img6 from "../img/571021102.jpg";
-import img7 from "../img/573259076.jpg";
-import img8 from "../img/609867474.jpg";
-import img9 from "../img/609867485.jpg";
-import img10 from "../img/609867519.jpg";
-import img11 from "../img/609867538.jpg";
-import img12 from "../img/609867589.jpg";
-import img13 from "../img/609867568.jpg";
-import img14 from "../img/610362482.jpg";
-import img15 from "../img/610402639.jpg";
-import img16 from "../img/610402773.jpg";
-import img17 from "../img/612656821.jpg";
+import img1 from "../img/AEON-Tower-by-CMC-LLC-1.jpg";
+import img2 from "../img/AEON-Tower-by-CMC-LLC-2.jpg";
+import img3 from "../img/AEON-Tower-by-CMC-LLC-3.jpg";
+import img4 from "../img/AEON-Tower-by-CMC-LLC-4.jpg";
+import img5 from "../img/AEON-Tower-by-CMC-LLC-5.jpg";
+import img6 from "../img/AEON-Tower-by-CMC-LLC-6.jpg";
+import img7 from "../img/AEON-Tower-by-CMC-LLC-7.jpg";
+import img8 from "../img/AEON-Tower-by-CMC-LLC-8.jpg";
+import img9 from "../img/AEON-Tower-by-CMC-LLC-9.jpg";
+import img10 from "../img/AEON-Tower-by-CMC-LLC-10.jpg";
+import img11 from "../img/AEON-Tower-by-CMC-LLC-11.jpg";
+import img12 from "../img/AEON-Tower-by-CMC-LLC-12.jpg";
+import img13 from "../img/AEON-Tower-by-CMC-LLC-13.jpg";
+import img14 from "../img/AEON-Tower-by-CMC-LLC-14.jpg";
+import img15 from "../img/AEON-Tower-by-CMC-LLC-15.jpg";
+import img16 from "../img/AEON-Tower-by-CMC-LLC-16.jpg";
+import img17 from "../img/AEON-Tower-by-CMC-LLC-17.jpg";
 
 // Array of image imports
 const images = [
