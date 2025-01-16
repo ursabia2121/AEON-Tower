@@ -21,7 +21,7 @@ const Footer = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="#home"
+                href="#LandingPage"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 Home
@@ -58,8 +58,8 @@ const Footer = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">Contact Us</h2>
           <p className="text-gray-400">J. P. Laurel Avenue, Davao City</p>
-          <p className="text-gray-400">Email: support@aeontower.com</p>
-          <p className="text-gray-400">Phone: +1 234 567 890</p>
+          <p className="text-gray-400">Email: cmc.aeontower@gmail.com</p>
+          <p className="text-gray-400">Phone: 09915991555</p>
 
           {/* Social Media Links */}
           <div className="mt-4 flex space-x-4">
@@ -69,18 +69,7 @@ const Footer = () => {
             >
               <i className="fab fa-facebook-f"></i> Facebook
             </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <i className="fab fa-instagram"></i> Instagram
-            </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <i className="fab fa-twitter"></i> Twitter
-            </a>
+           
           </div>
         </div>
       </div>
