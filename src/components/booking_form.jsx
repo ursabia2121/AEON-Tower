@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { SubmitForm } from "../api/axios";
 
 const BookingForm = () => {
+  const [unavailableDates, setUnavailableDates] = useState([]);
+
   const roomPaymentAmounts = {
     "Deluxe Double Studio": 150,
     "Deluxe Suite": 100,
@@ -85,9 +87,66 @@ const BookingForm = () => {
     });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Form Data:", formData);
+
+  //   if (
+  //     formData.paymentRequired &&
+  //     formData.paymentMethod !== "Cash" &&
+  //     !formData.paymentInfo
+  //   ) {
+  //     alert("Please provide payment details.");
+  //     return;
+  //   }
+  //   // Send the booking data to backend
+  //   try {
+  //     const response = await SubmitForm(formData);
+  //     if (response.success) {
+  //       alert("Booking submitted successfully!");
+  //       // Optionally, reset form or redirect
+  //       setFormData({
+  //         firstName: "",
+  //         lastName: "",
+  //         email: "",
+  //         phoneNumber: "",
+  //         roomType: "",
+  //         numberOfGuests: 1,
+  //         arrivalDate: "",
+  //         arrivalTime: "",
+  //         departureDate: "",
+  //         paymentRequired: false,
+  //         paymentMethod: "",
+  //         paymentInfo: "",
+  //         paymentAmount: 0, // Reset payment amount
+  //       });
+  //     } else {
+  //       alert("Error submitting the booking. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //     alert("There was an error submitting your booking.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+
+    // Check if the arrival date is unavailable
+    if (isDateUnavailable(formData.arrivalDate)) {
+      alert(
+        "The selected arrival date is already booked. Please choose another date."
+      );
+      return;
+    }
+
+    // Check if the departure date is unavailable
+    if (isDateUnavailable(formData.departureDate)) {
+      alert(
+        "The selected departure date is already booked. Please choose another date."
+      );
+      return;
+    }
 
     if (
       formData.paymentRequired &&
@@ -97,12 +156,11 @@ const BookingForm = () => {
       alert("Please provide payment details.");
       return;
     }
-    // Send the booking data to backend
+
     try {
       const response = await SubmitForm(formData);
       if (response.success) {
         alert("Booking submitted successfully!");
-        // Optionally, reset form or redirect
         setFormData({
           firstName: "",
           lastName: "",
@@ -116,7 +174,7 @@ const BookingForm = () => {
           paymentRequired: false,
           paymentMethod: "",
           paymentInfo: "",
-          paymentAmount: 0, // Reset payment amount
+          paymentAmount: 0,
         });
       } else {
         alert("Error submitting the booking. Please try again.");
@@ -125,6 +183,71 @@ const BookingForm = () => {
       console.error("Error submitting form:", error);
       alert("There was an error submitting your booking.");
     }
+  };
+
+  useEffect(() => {
+    if (formData.roomType) {
+      // Fetch unavailable dates for the selected room type
+      fetchUnavailableDates(formData.roomType);
+    }
+  }, [formData.roomType]);
+
+  const fetchUnavailableDates = async (roomType) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/check-availability/${roomType}`
+      );
+
+      // Check if the response is valid (status code 200)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Try to parse the response as JSON
+      const data = await response.json();
+
+      // If the response doesn't contain 'unavailableDates', log it
+      if (!data.unavailableDates) {
+        throw new Error("Response is missing unavailableDates");
+      }
+
+      setUnavailableDates(data.unavailableDates);
+    } catch (error) {
+      console.error("Error fetching unavailable dates:", error);
+      alert(
+        "There was an issue fetching the unavailable dates. Please try again later."
+      );
+    }
+  };
+
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+  
+    // If the user selects a booked date, reset it back to empty
+    if (isDateUnavailable(value)) {
+      alert("The selected date is booked. Please choose another date.");
+      setFormData({
+        ...formData,
+        [name]: "", // Reset the date field
+      });
+      return;
+    }
+  
+    // If the selected date is available, update the form data as usual
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  
+
+  const isDateUnavailable = (date) => {
+    return unavailableDates.some((unavailableDate) => {
+      const arrival = new Date(unavailableDate.arrivalDate);
+      const departure = new Date(unavailableDate.departureDate);
+      const selectedDate = new Date(date);
+      return selectedDate >= arrival && selectedDate <= departure;
+    });
   };
 
   return (
@@ -175,7 +298,12 @@ const BookingForm = () => {
 
         {/* Email Field */}
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
+          <label
+            htmlFor="email"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -189,7 +317,12 @@ const BookingForm = () => {
 
         {/* Phone Number Field */}
         <div className="mb-4">
-          <label htmlFor="phoneNumber" className="block text-gray-700 font-medium mb-2">Contact Number</label>
+          <label
+            htmlFor="phoneNumber"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Contact Number
+          </label>
           <input
             type="text"
             id="phoneNumber"
@@ -256,22 +389,36 @@ const BookingForm = () => {
 
         {/* Dates */}
         <div className="mb-4">
-          <label
-            htmlFor="arrivalDate"
-            className="block text-gray-700 font-medium mb-2"
-          >
-            Arrival Date
-          </label>
-          <input
-            type="date"
-            id="arrivalDate"
-            name="arrivalDate"
-            value={formData.arrivalDate}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
+  <label htmlFor="arrivalDate" className="block text-gray-700 font-medium mb-2">
+    Arrival Date
+  </label>
+  <input
+    type="date"
+    id="arrivalDate"
+    name="arrivalDate"
+    value={formData.arrivalDate}
+    onChange={handleDateChange}
+    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+    disabled={isDateUnavailable(formData.arrivalDate)}
+    style={{
+      backgroundColor: isDateUnavailable(formData.arrivalDate) ? 'red' : 'white',
+    }}
+  />
+  {isDateUnavailable(formData.arrivalDate) && (
+    <>
+      <p className="text-red-600 text-sm mt-1">Date Booked</p>
+      <button
+        type="button"
+        className="text-blue-500 mt-2"
+        onClick={() => setFormData({ ...formData, arrivalDate: "" })}
+      >
+        Re-pick Arrival Date
+      </button>
+    </>
+  )}
+</div>
+
         <div className="mb-4">
           <label
             htmlFor="arrivalTime"
@@ -290,22 +437,35 @@ const BookingForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="departureDate"
-            className="block text-gray-700 font-medium mb-2"
-          >
-            Departure Date
-          </label>
-          <input
-            type="date"
-            id="departureDate"
-            name="departureDate"
-            value={formData.departureDate}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
+  <label htmlFor="departureDate" className="block text-gray-700 font-medium mb-2">
+    Departure Date
+  </label>
+  <input
+    type="date"
+    id="departureDate"
+    name="departureDate"
+    value={formData.departureDate}
+    onChange={handleDateChange}
+    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    required
+    disabled={isDateUnavailable(formData.departureDate)}
+    style={{
+      backgroundColor: isDateUnavailable(formData.departureDate) ? 'red' : 'white',
+    }}
+  />
+  {isDateUnavailable(formData.departureDate) && (
+    <>
+      <p className="text-red-600 text-sm mt-1">Date Booked</p>
+      <button
+        type="button"
+        className="text-blue-500 mt-2"
+        onClick={() => setFormData({ ...formData, departureDate: "" })}
+      >
+        Re-pick Departure Date
+      </button>
+    </>
+  )}
+</div>
 
         {/* Payment Option */}
         <div className="mb-4">
@@ -341,9 +501,8 @@ const BookingForm = () => {
               <option value="">Select Payment Method</option>
               <option value="Cash">Cash</option>
               <option value="Credit Card">Credit Card</option>
-              <option value="PayPal">PayPal</option>
+
               <option value="GCash">GCash</option>
-              <option value="Maya">Maya</option>
             </select>
           </div>
         )}
